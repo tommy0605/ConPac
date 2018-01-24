@@ -1,4 +1,6 @@
 #include "Map.h"
+#include "PMan.h"
+#include "Gost.h"
 
 
 
@@ -48,4 +50,18 @@ void Map::DrawMap()
 		}
 		cout << endl;
 	}
+}
+
+void Map::InputPac(PMan * pac)
+{
+	int x = pac->x;
+	int y = pac->y;
+	mapi[y][x] = pac->mapnum;
+}
+
+void Map::InputGost(Gost * g)
+{
+	int x = g->x;
+	int y = g->y;
+	mapi[y][x] = g->mapnum;
 }
