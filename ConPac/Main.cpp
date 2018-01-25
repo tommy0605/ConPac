@@ -5,8 +5,19 @@
 
 void main()
 {
-	Gost* gost[4];
+	Gost gost[4];
 	PMan pac;
 	Map mapc;
-	mapc.DrawMap();
+	PManager manager(&mapc, &pac, gost);
+	
+	manager.UI();
+
+
+
+
+	
+	ofstream score;
+	score.open("highscore.txt", ios::out);
+	score << manager.highscore << endl;
+	score.close();
 }

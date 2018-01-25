@@ -1,14 +1,17 @@
 #include "PMan.h"
-
+#include "PManager.h"
+#include "Gost.h"
 
 
 PMan::PMan()
 {
-	x = 1;
-	y = 1;
+	x = 14;
+	y = 23;
 	life = 3;
-	doa = true;
-	mapnum = 5;
+	doa = false;
+	bc = false;
+	mapnum = PACMAN;
+	score = 0;
 
 }
 
@@ -17,24 +20,64 @@ PMan::~PMan()
 {
 }
 
-void PMan::Move()
+void PMan::Move(Map* map)
 {
-	char key;
-	cin >> key;
-
 	
+	if (kbhit())
+	{	
+		char key = getch();
+		map->mapi[y][x] = BLANK;
+		int fx = x;
+		int fy = y;
 
+		if (key == 'w')
+			y--;
+		else if (key == 's')
+			y++;
+		else if (key == 'a')
+			x--;
+		else if (key == 'd')
+			x++;
 
+		switch (map->mapi[y][x]) 
+		{
+			case GOST: 
+				if (bc == true)
+					doa = false;
+				doa = false;  break;
+			case BIGCOO:  score += 10;
+				bc = true;
+				map->mapi[y][x] = PACMAN; break;
+			case MINICOO:  score += 3;
+				map->mapi[y][x] = PACMAN; break;
+			case WALL: 
+				map->mapi[y][x] = WALL;
+				x = fx;
+				y = fx;
+				map->mapi[y][x] = PACMAN; break;
+			default:    map->mapi[y][x] = PACMAN; break;
+		}
+
+	}
 
 }
 
-bool PMan::CheckMap(Map * map)
+int PMan::LifeCheck()
 {
-	//TODO::맵에서 이동가능한지 체크
-	return false;
+	if (doa == false)
+	{
+		Sleep(1000);
+		x = 14;
+		y = 23;
+		life--;
+		doa = true;
+		return life;
+	}
+	else
+	return life;
 }
 
-bool PMan::CheckGost(Gost * g)
+int PMan::GetScore()
 {
-	return false;
+	return score;
 }

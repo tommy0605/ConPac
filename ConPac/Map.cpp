@@ -1,7 +1,7 @@
 #include "Map.h"
 #include "PMan.h"
 #include "Gost.h"
-
+#include "PManager.h"
 
 
 Map::Map()
@@ -25,6 +25,11 @@ Map::Map()
 		{
 			mapi[i][j] = imap[i][j] - '0';
 		}
+	for (int i = 0; i < HEIGHT; i++)
+		for (int j = 0; j < WIDETH; j++)
+		{
+			mapb[i][j] = mapi[i][j];
+		}
 }
 
 
@@ -32,7 +37,7 @@ Map::~Map()
 {
 }
 
-void Map::DrawMap()
+void Map::DrawMap(PMan* pac)
 {
 	for (int i = 0; i < HEIGHT; i++)
 	{
@@ -40,10 +45,25 @@ void Map::DrawMap()
 		{
 			switch (mapi[i][j])
 			{
-				case 0:
+				case WALL:
 					cout << "¡á";
 					break;
-				case 1:
+				case BIGCOO:
+					cout << "¡Ú";
+					break;
+				case MINICOO:
+					cout << "¡¤";
+					break;
+				case PACMAN:
+					if (pac->bc == true)
+						cout << "¡Ý";
+					else
+						cout << "¡Ü";
+					break;
+				case GOST:
+					cout << "£À";
+					break;
+				case BLANK:
 					cout << "¡¡";
 					break;
 			}
@@ -64,4 +84,24 @@ void Map::InputGost(Gost * g)
 	int x = g->x;
 	int y = g->y;
 	mapi[y][x] = g->mapnum;
+}
+
+bool Map::CheckClaer()
+{
+	for(int i = 0;i <HEIGHT;i++)
+		for (int j = 0; j < WIDETH; j++)
+		{
+			if (mapi[i][j] == MINICOO || mapi[i][j] == BIGCOO)
+				return false;
+		}
+	return true;
+}
+
+void Map::MapInit()
+{
+	for (int i = 0; i < HEIGHT; i++)
+		for (int j = 0; j < WIDETH; j++)
+		{
+			mapi[i][j] = mapb[i][j];
+		}
 }

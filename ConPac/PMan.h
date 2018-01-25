@@ -1,25 +1,27 @@
 #pragma once
 #include "Map.h"
-#include "Gost.h"
 
+class Gost;
 class PMan
 {
 public:
 	int x;
 	int y;
 	bool bc;
+	bool doa;
 	int mapnum;
+	int life;
+	int score;
 	PMan();
 	~PMan();
-	void Move();
-	bool CheckMap(Map* map);
-	bool CheckGost(Gost* g);
+	void Move(Map* map);
+	int LifeCheck();
+	int GetScore();
+
 	
 
 
 private:
-	int life;
-	bool doa;
 	
 	//TODO::키를 한번 누르면 계속 진행되게 해야함
 

@@ -32,5 +32,7 @@ void GMA::GetPxy(PMan * pac)
 
 void GMA::MoveA()
 {
+	
+
 	//TODO::고스트 이동 알고리즘 구현
 }
