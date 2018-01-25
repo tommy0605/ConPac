@@ -8,6 +8,7 @@ public:
 	int score;
 	int highscore;
 	int coin;
+	bool first;
 	PManager(Map* map, PMan* pac, Gost* g);
 	~PManager();
 	void UI();

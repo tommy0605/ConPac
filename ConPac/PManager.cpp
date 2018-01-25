@@ -12,6 +12,7 @@ PManager::PManager(Map* map, PMan* pac, Gost* g)
 	score = 0;
 	highscore = 0;
 	coin = 0;
+	first = true;
 }
 
 
@@ -54,34 +55,36 @@ void PManager::UI()
 
 void PManager::Gamestart()
 {
-	map->InputPac(pac);
 	g[0].SetXY(12, 15);
 	g[1].SetXY(13, 15);
 	g[2].SetXY(14, 15);
 	g[3].SetXY(15, 15);
-	for (int i = 0; i < 4; i++)
-		map->InputGost(&g[i]);
 
 	while (true)
 	{
 		Sleep(500);
 		system("cls");
 
-		map->DrawMap(pac);
-		pac->Move(map);
+	
+	
+		map->InputPac(pac, g);
 		for (int i = 0; i < 4; i++)
 		{
 			g[i].DOACheck();
-			g[i].Move(map, pac);
+			map->InputGost(&g[i], pac);
 		}
+		map->DrawMap(pac);
+		pac->Move(map, g);
 		if (CheckCoin() == false)
 		{
 			map->MapInit();
+			cout << "GAME CLEAR!!" << endl;
 			Sleep(3000);
 			break;
 		}
 		score = pac->GetScore();
 		cout << "Score : " << score << endl;
+	
 	}
 }
 
@@ -92,7 +95,7 @@ void PManager::ShowHigh()
 
 bool PManager::CheckCoin()
 {
-	if (pac->LifeCheck() == 0)
+	if (pac->LifeCheck(map) == 0)
 	{
 		if (coin > 0)
 		{

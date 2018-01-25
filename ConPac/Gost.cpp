@@ -11,6 +11,8 @@ Gost::Gost()
 	inity = 0;
 	mapnum = GOST;
 	doa = true;
+	Tmap = BLANK;
+	fon = false;
 }
 
 
@@ -21,57 +23,98 @@ Gost::~Gost()
 void Gost::Move(Map * map, PMan* pac)
 {
 
-	int ikey = rand() %4;
+	int k = rand() % 4;
 	char key;
-	switch (ikey)
+	int xx = this->x;
+	int yy = this->y;
+	switch (k)
 	{
-		case 0:key = 'w'; break;
-		case 1:key = 's'; break;
-		case 2:key = 'a'; break;
-		case 3:key = 'd'; break;
+		case 0:
+			key = 'w';
+			break;
+		case 1:
+			key = 's';
+			break;
+		case 2:
+			key = 'a';
+			break;
+		case 3:
+			key = 'd';
+			break;
 	}
-	int tmap = map->mapi[y][x];
-	int fx = x;
-	int fy = y;
 
-	if (key == 'w')
-		y--;
-	else if (key == 's')
-		y++;
-	else if (key == 'a')
-		x--;
-	else if (key == 'd')
-		x++;
-
-	switch (map->mapi[y][x])
+	if (fon == false)
 	{
-		case PACMAN: 
+		if (CheckThing(key, xx, yy, map, pac) == true)
+			map->mapi[y][x] = Tmap;
+	}
+	
+	switch (key)
+	{
+		case 'w':
+			if (CheckThing(key, xx, yy, map, pac) == true)
+				this->y--;
+			break;
+		case 's':
+			if (CheckThing(key, xx, yy, map, pac) == true)
+				this->y++;
+			break;
+		case 'a':
+			if (CheckThing(key, xx, yy, map, pac) == true)
+				this->x--;
+			break;
+		case 'd':
+			if (CheckThing(key, xx, yy, map, pac) == true)
+				this->x++;
+			break;
+	}
+	if (fon == false)
+	{
+		if (CheckThing(key, xx, yy, map, pac) == true)
+			Tmap = map->mapi[y][x];
+	}
+}
+
+bool Gost::CheckThing(char key, int x, int y, Map * map, PMan * pac)
+{
+	switch (key)
+	{
+		case 'w':
+			y--;
+			break;
+		case 's':
+			y++;
+			break;
+		case 'a':
+			x--;
+			break;
+		case 'd':
+			x++;
+			break;
+	}
+	if (map->mapi[y][x] == MINICOO || map->mapi[y][x] == BLANK || map->mapi[y][x] == BIGCOO || map->mapi[y][x] == PACMAN)
+	{
+		if (map->mapi[y][x] == PACMAN)
+		{
 			if (pac->bc == true)
 				doa = false;
 			else
-				pac->doa = false;
-			break;
-		case BIGCOO:
-			map->mapi[fy][fx] = tmap;
-			map->mapi[y][x] = GOST; break;
-		case BLANK:
-			map->mapi[fy][fx] = tmap;
-			map->mapi[y][x] = GOST; break;
-		case MINICOO:
-			map->mapi[fy][fx] = tmap;
-			map->mapi[y][x] = GOST; break;
-		case WALL:
-			map->mapi[y][x] = WALL;
-			x = fx;
-			y = fx;
-			map->mapi[y][x] = GOST; break;
-		case GOST:  x = fx;
-			y = fx;
-			map->mapi[y][x] = GOST; break;
-		default:    map->mapi[y][x] = GOST; break;
+				doa = false;
+		}
+		return true;
 	}
-	map->mapi[fy][fx] = tmap;
+	else
+		return false;
+
 }
+
+void Gost::CheckPacXY(int x, int y)
+{
+	if (this->x == x && this->y == y)
+		doa = false;
+}
+
+
 
 void Gost::DOACheck()
 {

@@ -31,8 +31,8 @@ public:
 	Map();
 	~Map();
 	void DrawMap(PMan* pac);
-	void InputPac(PMan* pac);
-	void InputGost(Gost* g);
+	void InputPac(PMan* pac, Gost * g);
+	void InputGost(Gost* g, PMan* pac);
 	bool CheckClaer();
 	void MapInit();
 	

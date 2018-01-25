@@ -20,53 +20,99 @@ PMan::~PMan()
 {
 }
 
-void PMan::Move(Map* map)
+void PMan::Move(Map * map, Gost * g)
 {
-	
-	if (kbhit())
-	{	
-		char key = getch();
-		map->mapi[y][x] = BLANK;
-		int fx = x;
-		int fy = y;
-
-		if (key == 'w')
-			y--;
-		else if (key == 's')
-			y++;
-		else if (key == 'a')
-			x--;
-		else if (key == 'd')
-			x++;
-
-		switch (map->mapi[y][x]) 
+	char key = getch();
+	int xx = this->x;
+	int yy = this->y;
+	if (kbhit)
+	{
+		switch (key)
 		{
-			case GOST: 
-				if (bc == true)
-					doa = false;
-				doa = false;  break;
-			case BIGCOO:  score += 10;
-				bc = true;
-				map->mapi[y][x] = PACMAN; break;
-			case MINICOO:  score += 3;
-				map->mapi[y][x] = PACMAN; break;
-			case WALL: 
-				map->mapi[y][x] = WALL;
-				x = fx;
-				y = fx;
-				map->mapi[y][x] = PACMAN; break;
-			default:    map->mapi[y][x] = PACMAN; break;
+			case 'w':
+				if (CheckThing(key, xx, yy, map, g) == true)
+					this->y--;
+				break;
+			case 's':
+				if (CheckThing(key, xx, yy, map, g) == true)
+					this->y++;
+				break;
+			case 'a':
+				if (CheckThing(key, xx, yy, map, g) == true)
+					this->x--;
+				break;
+			case 'd':
+				if (CheckThing(key, xx, yy, map, g) == true)
+					this->x++;
+				break;
 		}
-
 	}
-
+	if (CheckThing(key, xx, yy, map, g) == true)
+		map->mapi[yy][xx] = BLANK;
 }
 
-int PMan::LifeCheck()
+bool PMan::CheckThing(char key, int x, int y, Map * map, Gost* g)
+{
+	switch (key)
+	{
+		case 'w':
+			y--;
+			break;
+		case 's':
+			y++;
+			break;
+		case 'a':
+			x--;
+			break;
+		case 'd':
+			x++;
+			break;
+	}
+	if (map->mapi[y][x] == MINICOO || map->mapi[y][x] == BLANK || map->mapi[y][x] == BIGCOO)
+	{
+		switch (map->mapi[y][x])
+		{
+			case MINICOO:
+				score += 10;
+				return true;
+				break;
+			case BLANK:
+				return true;
+				break;
+			case BIGCOO:
+				bc = true;
+				score += 20;
+				return true;
+				break;
+
+
+		}
+		return true;
+	}
+	else if (map->mapi[y][x] == GOST)
+	{
+		if (bc == true)
+		{
+			for(int i =0;i<4;i++)
+				g[i].CheckPacXY(x, y);
+		}
+		else
+			doa = false;
+	}
+	else
+		return false;
+}
+
+
+
+int PMan::LifeCheck(Map* map)
 {
 	if (doa == false)
 	{
-		Sleep(1000);
+		cout << "PACMAN GOT EATEN" << endl;
+		map->mapi[y][x] = BLANK;
+		Sleep(100);
+
 		x = 14;
 		y = 23;
 		life--;

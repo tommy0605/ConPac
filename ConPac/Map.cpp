@@ -72,15 +72,16 @@ void Map::DrawMap(PMan* pac)
 	}
 }
 
-void Map::InputPac(PMan * pac)
+void Map::InputPac(PMan * pac, Gost * g)
 {
 	int x = pac->x;
 	int y = pac->y;
 	mapi[y][x] = pac->mapnum;
 }
 
-void Map::InputGost(Gost * g)
+void Map::InputGost(Gost * g, PMan* pac)
 {
+	g->Move(this, pac);
 	int x = g->x;
 	int y = g->y;
 	mapi[y][x] = g->mapnum;
