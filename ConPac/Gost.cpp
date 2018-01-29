@@ -92,7 +92,7 @@ bool Gost::CheckThing(char key, int x, int y, Map * map, PMan * pac)
 			x++;
 			break;
 	}
-	if (map->mapi[y][x] == MINICOO || map->mapi[y][x] == BLANK || map->mapi[y][x] == BIGCOO || map->mapi[y][x] == PACMAN)
+	if (map->mapi[y][x] == MINICOO || map->mapi[y][x] == BLANK || map->mapi[y][x] == BIGCOO )
 	{
 		if (map->mapi[y][x] == PACMAN)
 		{
@@ -102,6 +102,17 @@ bool Gost::CheckThing(char key, int x, int y, Map * map, PMan * pac)
 				doa = false;
 		}
 		return true;
+	}
+	else if (map->mapi[y][x] == PACMAN)
+	{
+		if (map->mapi[y][x] == PACMAN)
+		{
+			if (pac->bc == true)
+				doa = false;
+			else
+				doa = false;
+		}
+		return false;
 	}
 	else
 		return false;

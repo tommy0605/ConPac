@@ -2,6 +2,7 @@
 #include "PMan.h"
 #include "Gost.h"
 #include "PManager.h"
+#include "Draw.h"
 
 
 Map::Map()
@@ -37,8 +38,9 @@ Map::~Map()
 {
 }
 
-void Map::DrawMap(PMan* pac)
+void Map::DrawMap(PMan* pac, Draw* draw)
 {
+	string str;
 	for (int i = 0; i < HEIGHT; i++)
 	{
 		for (int j = 0; j < WIDETH; j++)
@@ -46,30 +48,36 @@ void Map::DrawMap(PMan* pac)
 			switch (mapi[i][j])
 			{
 				case WALL:
-					cout << "¡á";
+					str += "¡á";
 					break;
 				case BIGCOO:
-					cout << "¡Ú";
+					str += "¡Ú";
 					break;
 				case MINICOO:
-					cout << "¡¤";
+					str += "¡¤";
 					break;
 				case PACMAN:
 					if (pac->bc == true)
-						cout << "¡Ý";
+						str += "¡Ý";
 					else
-						cout << "¡Ü";
+						str += "¡Ü";
 					break;
 				case GOST:
-					cout << "£À";
+					str += "£À";
 					break;
 				case BLANK:
-					cout << "¡¡";
+					str += "¡¡";
 					break;
 			}
 		}
-		cout << endl;
+		str += "\n";
 	}
+	for (int i = 0; i < draw->size - 1; i++)
+	{
+		draw->map[i] = str[i];
+	}
+
+	draw->map[draw->size - 1] = NULL;
 }
 
 void Map::InputPac(PMan * pac, Gost * g)

@@ -22,33 +22,38 @@ PMan::~PMan()
 
 void PMan::Move(Map * map, Gost * g)
 {
-	char key = getch();
 	int xx = this->x;
 	int yy = this->y;
-	if (kbhit)
+
+	switch (key)
 	{
-		switch (key)
-		{
-			case 'w':
-				if (CheckThing(key, xx, yy, map, g) == true)
-					this->y--;
-				break;
-			case 's':
-				if (CheckThing(key, xx, yy, map, g) == true)
-					this->y++;
-				break;
-			case 'a':
-				if (CheckThing(key, xx, yy, map, g) == true)
-					this->x--;
-				break;
-			case 'd':
-				if (CheckThing(key, xx, yy, map, g) == true)
-					this->x++;
-				break;
-		}
+		case 'w':
+			if (CheckThing(key, xx, yy, map, g) == true)
+				this->y--;
+			break;
+		case 's':
+			if (CheckThing(key, xx, yy, map, g) == true)
+				this->y++;
+			break;
+		case 'a':
+			if (CheckThing(key, xx, yy, map, g) == true)
+				this->x--;
+			break;
+		case 'd':
+			if (CheckThing(key, xx, yy, map, g) == true)
+				this->x++;
+			break;
 	}
 	if (CheckThing(key, xx, yy, map, g) == true)
 		map->mapi[yy][xx] = BLANK;
+}
+
+void PMan::InputMove()
+{
+	if (kbhit())
+	{
+		key = getch();
+	}
 }
 
 bool PMan::CheckThing(char key, int x, int y, Map * map, Gost* g)
@@ -98,6 +103,7 @@ bool PMan::CheckThing(char key, int x, int y, Map * map, Gost* g)
 		}
 		else
 			doa = false;
+		return false;
 	}
 	else
 		return false;

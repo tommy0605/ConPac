@@ -2,13 +2,15 @@
 #include "Gost.h"
 #include "PManager.h"
 #include "PMan.h"
+#include "Draw.h"
 
 void main()
 {
 	Gost gost[4];
 	PMan pac;
 	Map mapc;
-	PManager manager(&mapc, &pac, gost);
+	Draw draw;
+	PManager manager(&mapc, &pac, gost, &draw);
 	
 	manager.UI();
 

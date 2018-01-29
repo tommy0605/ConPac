@@ -20,6 +20,7 @@ enum THINGS
 	GOST
 };
 
+class Draw;
 class PManager;
 class PMan;
 class Gost;
@@ -30,7 +31,7 @@ public:
 	int mapb[HEIGHT][WIDETH];
 	Map();
 	~Map();
-	void DrawMap(PMan* pac);
+	void DrawMap(PMan* pac, Draw* draw);
 	void InputPac(PMan* pac, Gost * g);
 	void InputGost(Gost* g, PMan* pac);
 	bool CheckClaer();

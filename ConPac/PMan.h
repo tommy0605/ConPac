@@ -12,9 +12,11 @@ public:
 	int mapnum;
 	int life;
 	int score;
+	char key;
 	PMan();
 	~PMan();
 	void Move(Map* map, Gost* g);
+	void InputMove();
 	bool CheckThing(char key, int x, int y, Map* map, Gost* g);
 	int LifeCheck(Map* map);
 	int GetScore();

@@ -1,14 +1,16 @@
 #include "PManager.h"
 #include "Gost.h"
 #include "PMan.h"
+#include "Draw.h"
 
 
 
-PManager::PManager(Map* map, PMan* pac, Gost* g)
+PManager::PManager(Map* map, PMan* pac, Gost* g, Draw* draw)
 {
 	this->map = map;
 	this->pac = pac;
 	this->g = g;
+	this->draw = draw;
 	score = 0;
 	highscore = 0;
 	coin = 0;
@@ -59,22 +61,22 @@ void PManager::Gamestart()
 	g[1].SetXY(13, 15);
 	g[2].SetXY(14, 15);
 	g[3].SetXY(15, 15);
+	draw->CreateBuffer(WIDETH * 2, HEIGHT);
 
 	while (true)
 	{
 		Sleep(500);
-		system("cls");
-
+		
 	
-	
+		pac->InputMove();
 		map->InputPac(pac, g);
 		for (int i = 0; i < 4; i++)
 		{
 			g[i].DOACheck();
 			map->InputGost(&g[i], pac);
 		}
-		map->DrawMap(pac);
 		pac->Move(map, g);
+		map->DrawMap(pac, draw);
 		if (CheckCoin() == false)
 		{
 			map->MapInit();
@@ -84,6 +86,9 @@ void PManager::Gamestart()
 		}
 		score = pac->GetScore();
 		cout << "Score : " << score << endl;
+		draw->Clear();
+		draw->Print();
+		draw->Flipping();
 	
 	}
 }
@@ -109,4 +114,5 @@ bool PManager::CheckCoin()
 			return false;
 		}
 	}
+	return true;
 }

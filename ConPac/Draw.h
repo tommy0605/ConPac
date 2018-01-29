@@ -1,4 +1,5 @@
 #pragma once
+#include "DoubleBuffering.h"
 
 class Draw
 {
@@ -18,7 +19,7 @@ public:
 	void CreateBuffer(int x, int y)
 	{
 		buffer = new DoubleBuffering(x, y);
-		size = (x + 1) * y + 1;
+		size = (x + 1) * y ;
 		map = new char[size];
 		//map = {};
 	}

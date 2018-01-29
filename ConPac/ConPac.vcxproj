@@ -101,6 +101,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,7 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GMA.cpp" />
+    <ClCompile Include="DoubleBuffering.cpp" />
     <ClCompile Include="Gost.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -150,7 +151,8 @@
     <ClCompile Include="PManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GMA.h" />
+    <ClInclude Include="DoubleBuffering.h" />
+    <ClInclude Include="Draw.h" />
     <ClInclude Include="Gost.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="PMan.h" />

@@ -1,7 +1,7 @@
 #pragma once
 #include "Map.h"
 
-
+class Draw;
 class PManager
 {
 public:
@@ -9,7 +9,7 @@ public:
 	int highscore;
 	int coin;
 	bool first;
-	PManager(Map* map, PMan* pac, Gost* g);
+	PManager(Map* map, PMan* pac, Gost* g, Draw* draw);
 	~PManager();
 	void UI();
 	void Gamestart();
@@ -27,5 +27,6 @@ private:
 	Map* map;
 	PMan* pac;
 	Gost* g;
+	Draw* draw;
 };
 
